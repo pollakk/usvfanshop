@@ -10,8 +10,8 @@
 
     :root {
       --ink: #111111;
-      --red: #d71920;
-      --red-dark: #a80f15;
+      --red: #9f1100;
+      --red-dark: #7f0e00;
       --paper: #f8f8f5;
       --soft: #ecece8;
       --line: #c9c9c4;
@@ -176,12 +176,13 @@
     }
 
     .section-head {
+      --chapter-progress: 16.6667%;
       position: relative;
       display: flex;
       align-items: baseline;
       justify-content: space-between;
       gap: 22px;
-      border-top: 2px solid currentColor;
+      border-top: 2px solid var(--ink);
       padding-top: 12px;
       margin-bottom: clamp(34px, 5vw, 62px);
     }
@@ -191,9 +192,29 @@
       position: absolute;
       top: -2px;
       left: 0;
-      width: 72px;
+      width: var(--chapter-progress);
       height: 2px;
       background: var(--red);
+    }
+
+    .chapter-1 { --chapter-progress: 16.6667%; }
+    .chapter-2 { --chapter-progress: 33.3333%; }
+    .chapter-3 { --chapter-progress: 50%; }
+    .chapter-4 { --chapter-progress: 66.6667%; }
+    .chapter-5 { --chapter-progress: 83.3333%; }
+
+    .hero .section-head {
+      border-top-color: rgba(255,255,255,.3);
+      margin: 28px 0 0;
+    }
+
+    .hero > .section-head {
+      margin-top: 28px;
+      margin-bottom: 0;
+    }
+
+    .section--black .section-head {
+      border-top-color: rgba(255,255,255,.35);
     }
 
     .section-label {
@@ -501,7 +522,7 @@
     textarea:focus {
       border-color: var(--red);
       outline: none;
-      box-shadow: 0 0 0 2px rgba(215,25,32,.18);
+      box-shadow: 0 0 0 2px rgba(159,17,0,.18);
     }
 
     .qty-box { display: flex; height: 38px; }
@@ -736,6 +757,59 @@
       line-height: 1.5;
     }
 
+    .availability-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(260px, .72fr);
+      align-items: start;
+      gap: clamp(30px, 7vw, 110px);
+    }
+
+    .availability-card {
+      max-width: 690px;
+    }
+
+    .availability-note {
+      margin-top: 18px;
+      border-left: 5px solid var(--red);
+      padding: 20px 24px;
+      color: var(--white);
+      background: var(--ink);
+      box-shadow: 0 10px 0 rgba(17,17,17,.12);
+      font-size: clamp(12px, 1.1vw, 15px);
+      line-height: 1.65;
+    }
+
+    .availability-note p { margin: 0; }
+
+    .stand-image-frame {
+      width: min(100%, 430px);
+      aspect-ratio: 1 / 1;
+      justify-self: end;
+      padding: 8px;
+      border: 2px solid var(--ink);
+      background: var(--ink);
+      box-shadow: 0 10px 0 rgba(17,17,17,.12);
+    }
+
+    .stand-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .availability-deadline {
+      grid-column: 1 / -1;
+      margin: 0;
+      padding: 24px 28px;
+      color: var(--white);
+      background: var(--red);
+      box-shadow: 0 10px 0 rgba(17,17,17,.12);
+      font-size: clamp(17px, 2vw, 28px);
+      font-weight: 700;
+      line-height: 1.25;
+      letter-spacing: -.03em;
+    }
+
     .footer {
       min-height: 78px;
       display: flex;
@@ -781,14 +855,15 @@
     }
 
     @media (max-width: 980px) {
-      .shop-layout { grid-template-columns: 1fr; }
+      .shop-layout,
+      .availability-layout { grid-template-columns: 1fr; }
       .cart-panel { position: static; }
+      .stand-image-frame { justify-self: start; }
+      .availability-deadline { grid-column: auto; }
     }
 
     @media (max-width: 700px) {
-      .hero {
-        min-height: 0;
-      }
+      .hero { min-height: 0; }
 
       .topbar::after {
         max-width: 130px;
@@ -817,9 +892,7 @@
         padding-bottom: 70px;
       }
 
-      .section-head {
-        display: block;
-      }
+      .section-head { display: block; }
 
       .section-note {
         margin-top: 10px;
@@ -862,6 +935,8 @@
       </a>
     </div>
 
+    <div class="section-head chapter-1" aria-hidden="true"></div>
+
     <div class="hero-main">
       <h1>USV<br>Jubiläums-<br>Serie</h1>
       <div class="hero-intro">
@@ -882,7 +957,7 @@
 
   <main>
     <section class="section section--soft" id="design">
-      <div class="section-head">
+      <div class="section-head chapter-2">
         <span class="section-label">02 / Design</span>
       </div>
       <div class="design-grid">
@@ -915,7 +990,7 @@
     </section>
 
     <section class="section section--black" id="musterartikel">
-      <div class="section-head">
+      <div class="section-head chapter-3">
         <span class="section-label">03 / Musterartikel</span>
       </div>
       <div class="samples-grid">
@@ -937,7 +1012,7 @@
     </section>
 
     <section class="section section--white" id="kollektion">
-      <div class="section-head">
+      <div class="section-head chapter-4">
         <span class="section-label">04 / Kollektion</span>
       </div>
       <div class="shop-layout">
@@ -978,6 +1053,23 @@
           </form>
           <p class="cart-hint">Bitte senden Sie Ihre Bestellung per E-Mail an klemenspollak@live.at. Klicken Sie dazu entweder auf „Bestellung per E-Mail versenden“, um die Bestellung direkt per E-Mail zu übermitteln, oder auf „Bestelltext kopieren“, um den Bestelltext zu kopieren und anschließend in eine E-Mail an klemenspollak@live.at einzufügen.</p>
         </aside>
+      </div>
+    </section>
+
+    <section class="section section--soft" id="bestellung">
+      <div class="section-head chapter-5">
+        <span class="section-label">05 / Bestellung</span>
+      </div>
+      <div class="availability-layout">
+        <div class="availability-card">
+          <div class="stand-image-frame">
+            <img class="stand-image" src="https://raw.githubusercontent.com/pollakk/usvfanshop/main/staender.png" alt="Darstellung des USV-Fanshops" loading="lazy">
+          </div>
+          <div class="availability-note">
+            <p>Ausgewählte Artikel und Größen können beim Heimspiel gegen den USC Friedersbach am Freitag, 25. September 2026, ab 20:00 Uhr sowie bei den Trainings am Freitag, 11. und 18. September 2026, jeweils von 18:00 bis 20:00 Uhr anprobiert werden.</p>
+          </div>
+        </div>
+        <p class="availability-deadline">Bestellungen für die erste Lieferung werden bis Sonntag, 27. September 2026, 23:59 Uhr entgegengenommen.</p>
       </div>
     </section>
   </main>
